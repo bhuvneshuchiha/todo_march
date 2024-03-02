@@ -1,7 +1,7 @@
-export function CreateTodo(){
+export function CreateTodo(props){
     return <div>
-    <input type="text" placeholder = 'title' /><br/>
-    <input type="text" placeholder = 'description' /><br/>
-    <button>Add todo</button>
+        <h1>{props.title}</h1>
+        <h2>{props.description}</h2>
+        <h3>{props.completed}</h3>
     </div>
 }
