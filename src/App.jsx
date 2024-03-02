@@ -1,17 +1,37 @@
-import { useState } from 'react'
-import { CreateTodo } from './components/CreateTodo'
-import { Todos } from './components/Todos'
+import { useEffect, useState } from 'react'
+
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [todos, setTodos] = useState([]);
 
-  return (
-    <>
-     <CreateTodo></CreateTodo>
-     <Todos></Todos>
-    </>
-  )
+  useEffect(() => {
+    setInterval(() => {
+      fetch("https://sum-server.100xdevs.com/todos")
+      .then(async(res) => {
+        const data = await res.json()
+        setTodos(data.todos)
+      })
+    }, 2000)
+   }, [])
+
+
+
+
+return <div>
+  {todos.map((todo) => {
+    return <div  key={todo.id}>
+      <Todo title = {todo.title} description = {todo.description} completed = {todo.completed}></Todo>
+    </div>
+  })}
+</div>
 }
 
+function Todo(props){
+  return <div>
+    <h2>{props.title}</h2>
+    <h2>{props.description}</h2>
+    <h2>{props.completed === true ? "Completed" : "Not Completed"}</h2>
+  </div>
+}
 export default App
